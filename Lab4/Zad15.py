@@ -10,7 +10,6 @@ for i in range(n):
         x = randint(0,20)
         a[i][j] = x
     print(a[i])
-    print(sum(a[i][(i+1):len(a)]))
 suma_nad_przekątną = 0
 for i in range(len(a)):
     suma_nad_przekątną += sum(a[i][(i+1):len(a)])
