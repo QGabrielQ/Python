@@ -1,5 +1,9 @@
 import numpy as np
 import os
+class bcolors:
+    BLUE = '\033[94m'
+    RED = '\033[91m'
+    WHITE = '\033[97m'
 puste = " "
 sciana = "#"
 ludzik = "o"
@@ -9,13 +13,13 @@ def RysujLabirynt(macierz, puste, sciana, ludzik, drzwi):
       print("\n",end="")
       for j in i:
         if(j == 1):
-            print(sciana,sep="",end="")
+            print(bcolors.WHITE + sciana,sep="",end="")
         if(j == 0):
            print(puste,sep="",end="")
         if(j == 2):
-           print(ludzik,sep="",end="")
+           print(bcolors.BLUE + ludzik,sep="",end="")
         if(j==3):
-           print(drzwi,sep="",end="")
+           print(bcolors.RED + drzwi,sep="",end="")
 
 def aktualizujLabirynt(macierz, ruch):
     PlayerX = int(np.where(Labirynt == 2)[1][0])
