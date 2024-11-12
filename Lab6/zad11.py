@@ -1,17 +1,15 @@
 import math
-def NaJednejLini(P1,P2,P3):
-    x = P3[0]
-    wspP = (P1[1]-P2[1])/(P1[0]-P2[0])
-    y = wspP * (x-P1[0]) + P1[1]
-    if(P3[1] == y):
+def Współliniowe(P1,P2,P3):
+    Lewa = (P2[0]-P1[0])*(P3[1]-P1[1])
+    Prawa = (P2[1]-P1[1])*(P3[0]-P1[0])
+    if (Lewa == Prawa):
         return 1
     else:
         return 0
 
 
-
 def obwodtrojkata(P1,P2,P3):
-    if(NaJednejLini(P1,P2,P3) == 0):
+    if(Współliniowe(P1,P2,P3) == 0):
         x1 = pow((P2[0]-P1[0]),2)
         y1 = pow((P2[1]-P1[1]),2)
         A = math.sqrt(x1+y1)
@@ -24,10 +22,10 @@ def obwodtrojkata(P1,P2,P3):
         return A + B + C
     else:
         print("Punkty leżą na jednej lini!!!!")
-        
+        return 0
     
     
-P1 = [0,0]
-P2 = [1,1]
-P3 = [2,2]
+P1 = [4,0]
+P2 = [0,3]
+P3 = [0,0]
 print(obwodtrojkata(P1,P2,P3))
