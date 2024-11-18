@@ -9,17 +9,13 @@ def merge_dictionaries(dict1,dict2):
     dict3 = {**dict1,**dict2}
     print(dict3)
 def odd_sum_dictionaries(dict1,dict2):
-    D1Val = list(dict1.values())
-    D2Val = list(dict2.values())
-    sumD1Val = 0
-    sumD2Val = 0
-    for i in D1Val:
-        if i%2 != 0:
-            sumD1Val += i
-    for i in D2Val:
-        if i%2 != 0:
-            sumD2Val += i
-    sum = sumD2Val+ sumD1Val
+    sum = 0 
+    for y in dict1.values():
+        if y%2 == 1:
+            sum += y
+    for y in dict2.values():
+        if y%2 == 1:
+            sum += y
     print(sum)
 
     
