@@ -1,4 +1,3 @@
-from collections import Counter
 def find_max(dict):
     dictValues = list(dict.values())
     max = dictValues[0]
