@@ -6,4 +6,4 @@ def binary(n,napis=""):
         n = n//2
         return binary(n,napis)
     print(napis[::-1])
-print(binary(4))
+print(binary(10))
