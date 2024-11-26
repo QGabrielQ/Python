@@ -11,9 +11,9 @@ def factorize(n,pierwsze=[]):
       for i in pierwsze:
         if(n%i==0):
           print(i," ",end="",)
-          return factorize(n/i)
+          return factorize(n//i)
       
-print(factorize(42069))
+print(factorize(50))
 
     
             
