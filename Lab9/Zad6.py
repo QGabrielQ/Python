@@ -1,15 +1,35 @@
-def NieOptEuklides(a,b):
-    while(a!=b):
-        if(a>b):
-            a-=b
-        else:
-            b-=a
-    return a,b
-def OptEuklides(a,b):
-    while(b!=0):
-        pom = b
-        b = a%b
-        a = pom
+def NWD(a,b):
+    while b != 0:
+        a, b=b, a %b
     return a
-print(NieOptEuklides(12,18))
-print(OptEuklides(12,18))
+#       [Start NWD(a,b)]
+#            |
+#       [Wczytaj a i b]
+#            |
+#       [Czy b == 0?] - "1"
+#      /             \
+#    Tak              Nie
+#     |                |
+# [Return a]         [a,b = b,a%b]
+#                       |
+#                   [Powrót do "1"]
+
+def NWDRek(a,b):
+    if(b == 0):
+        return a
+    else:
+        return NWDRek(b,a%b)
+#                     [Start NWD(a,b)]
+#                        |
+#                     [Wczytaj a i b]
+#                         |
+#                     [Czy b == 0?]
+#                    /            \
+#                  Tak             Nie
+#                   |               |
+#                [Return a]       [Wywołaj NWD(b,a%b)]
+#                                   |
+#                                 [Koniec]
+print(NWD(12,18))
+print(NWDRek(12,18))
+
