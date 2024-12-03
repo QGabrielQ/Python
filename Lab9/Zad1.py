@@ -4,6 +4,7 @@ for i in range(0,11):
     else:
         print(i,"-nieparzysta")
 
+<<<<<<< Updated upstream
 #              [Start]
 #                 |
 #           [Inicjalizuj i = 0]
@@ -23,3 +24,6 @@ for i in range(0,11):
 #      [i + 1]
 #         |
 #  [Powrót do "Czy i <= 10?"]
+=======
+        
+>>>>>>> Stashed changes
