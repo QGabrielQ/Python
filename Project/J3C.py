@@ -38,6 +38,11 @@ class Candle:
        self.IndexHigh = IndexHigh
        self.IndexLow = IndexLow
        self.IndexClose = IndexClose
+class bcolors:
+    BLUE = '\033[94m'
+    RED = '\033[91m'
+    WHITE = '\033[97m'
+   
 
 def log_time(file):
     now = datetime.now()
@@ -100,8 +105,8 @@ def read_file(file, file2):
                       candles.append(Candle(
                                    Date=line[0],
                                    Volume=float(line[5].strip('\n')),
-                                    Open=float(line[1]),
-                                  High=float(line[2]),
+                                   Open=float(line[1]),
+                                   High=float(line[2]),
                                    Low=float(line[3]),
                                    Close=float(line[4]),
                                    Color="unknown",  # Determined later
@@ -152,10 +157,10 @@ def read_file(file, file2):
             log_time(file2)
             file2.write(f"Scale calculated. ({maxOverall}-{minOverall}) / {height} = {scale}\n")
 
-            schematic = [[0] * line_count for _ in range(height)]
-            for i in range(height):
-                for j in range(line_count):
-                    schematic[i][j] = 0
+            # schematic = [[0] * line_count for _ in range(height)]
+            # for i in range(height):
+            #     for j in range(line_count):
+            #         schematic[i][j] = 0
 
             with open(output_file_name, 'w') as chart:
                 scale_values = [maxOverall - i * scale for i in range(height)]
@@ -224,6 +229,10 @@ def read_file(file, file2):
 
                 log_time(file2)
                 file2.write("Encoding the Schematic table...\n")
+                schematic = [[0] * line_count for _ in range(height)]
+                for i in range(height):
+                    for j in range(line_count):
+                        schematic[i][j] = 0
                 column = 0
                 for i in range(line_count):
                     for j in range(height):
@@ -242,6 +251,7 @@ def read_file(file, file2):
                             for k in range(candles[i].IndexOpen, candles[i].IndexClose + 1):
                                 schematic[k][column] = 3
                     column += 1
+
                 log_time(file2)
                 file2.write("Schematic table encoded.\n")
                 with open("Schematic.txt", 'w') as schema:
@@ -255,7 +265,12 @@ def read_file(file, file2):
                 file2.write(f"Printing chart into {output_file_name}...\n")
                 max_temp = maxOverall
                 for i in range(height):
-                    chart.write(f"{max_temp:.3f} ")
+                    if(max_temp < 10):
+                        chart.write(f"{max_temp:.3f}  ")
+                    elif(max_temp < 100 and max_temp > 10):
+                        chart.write(f"{max_temp:.3f} ")
+                    else:
+                        chart.write(f"{max_temp:.3f}")
                     for j in range(line_count):
                         if schematic[i][j] == 0:
                             chart.write(" ")
@@ -265,20 +280,32 @@ def read_file(file, file2):
                             chart.write("#")
                         elif schematic[i][j] == 2:
                             chart.write("O")
-                    print(f"{max_temp:.3f} ", end="")
-                    for k in range(line_count):
-                        if schematic[i][k] == 0:
-                            print(" ", end="")
-                        elif schematic[i][k] == 1:
-                            print("|", end="")
-                        elif schematic[i][k] == 3:
-                            print("#", end="")
-                        elif schematic[i][k] == 2:
-                            print("O", end="")
-                    print()
+                    # print(f"{max_temp:.3f} ", end="")
+                    # for k in range(line_count):
+                    #     if schematic[i][k] == 0:
+                    #         print(" ", end="")
+                    #     elif schematic[i][k] == 1:
+                    #         print("|", end="")
+                    #     elif schematic[i][k] == 3:
+                    #         print("#", end="")
+                    #     elif schematic[i][k] == 2:
+                    #         print("O", end="")
+                    # print()
                     max_temp -= scale
                     chart.write('\n')
-
+                
+                date_parts = [candle.Date for candle in candles]  # Assuming candle.Date is in YYYY-MM-DD format
+                # Print the entire date vertically under each candle
+                date_height = 10  # YYYY-MM-DD is 10 characters long
+                # Printing the full date vertically beneath each candle
+                for i in range(date_height):
+                    chart.write("       ")  # Initial space for alignment
+                    for j in range(line_count):
+                        if i < len(date_parts[j]):
+                           chart.write(f"{date_parts[j][i]}")  # Print each character vertically under each candle
+                        else:
+                           chart.write(" ")  # Leave space if date is shorter
+                    chart.write("\n")
                 chart.write(f"Scale - {scale}\n")
                 chart.write(f"Extreme values: {scale_values[height - 1]} {scale_values[0]}\n")
 
@@ -313,7 +340,7 @@ def menu(input_char, file, file2):
         os.system('cls' if os.name == 'nt' else 'clear')
         logo()
         print("Welcome to J3C! - Japanese Candle Chart Creator")
-        print("Coded by: Aleksander Gabriel Piotrzkowski, Index: 197777, Field of Study: EiT, Group 3")
+        print("Coded by: Aleksander Gabriel Piotrzkowski, Field of Study: IT, Group 4")
         print("'q/Q': Terminates Program")
         print("'g/G': Downloads data from given directory and generates a chart which is saved to chart.txt")
         input_char = input("Input: ")
